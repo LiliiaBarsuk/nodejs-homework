@@ -1,8 +1,9 @@
 const service = require("../service/contacts");
 
 const get = async (req, res, next) => {
+  const {_id} = req.user;
     try {
-      const results = await service.getAllContacts();
+      const results = await service.getAllContacts(_id);
       res.json({
         status: 'success',
         code: 200,
@@ -42,8 +43,9 @@ const getById = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     const { name, emai, phone, favorite } = req.body
+    const {_id} = req.user;
     try {
-      const result = await service.createContact({ name, emai, phone, favorite })
+      const result = await service.createContact({ name, emai, phone, favorite, owner: _id })
   
       res.status(201).json({
         status: 'success',

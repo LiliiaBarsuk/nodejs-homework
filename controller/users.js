@@ -1,7 +1,7 @@
 const service = require("../service/users");
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -37,6 +37,7 @@ const registerUser = async (req, res, next) => {
 
 const loginUser = async (req, res, next) => {
     const {email, password} = req.body;
+    
     try { 
     const user = await service.findUser(email);
     const passCompare = bcrypt.compareSync(password, user.password);
@@ -67,10 +68,30 @@ const loginUser = async (req, res, next) => {
       console.error(e)
       next(e)
     }
-}
+};
+
+const getCurrent = async (req, res, ) => {
+    const {email, subscription} = req.user;
+
+    res.json({
+        status: "success",
+        code: 200,
+        data: {
+            user: {
+                email,
+                subscription
+            }
+        }
+
+    })
+
+};
+
+
 
 module.exports = {
     registerUser,
-    loginUser   
+    loginUser,
+    getCurrent
 };
   
