@@ -2,6 +2,7 @@ const service = require("../service/users");
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
+const User = require("../service/schemas/user");
 
 dotenv.config();
 
@@ -54,7 +55,7 @@ const loginUser = async (req, res, next) => {
     }
     
     const token = jwt.sign(payload, SECRET_KEY, {expiresIn: '1h'});
-    
+    await User.findByIdAndUpdate(user._id, {token});
     res.status(200).json({
         status: 'success',
         code: 200,
@@ -87,11 +88,15 @@ const getCurrent = async (req, res, ) => {
 
 };
 
-
+const logOutUser = async (req, res, next) => {
+    const {_id} = req.user;      
+    await User.findByIdAndUpdate(_id, {token: null})
+};
 
 module.exports = {
     registerUser,
     loginUser,
-    getCurrent
+    getCurrent,
+    logOutUser
 };
   

@@ -14,8 +14,9 @@ const getUser = async(id) => {
 }
 
 
+
 module.exports = {
     findUser,
     register,
-    getUser
+    getUser,
 }

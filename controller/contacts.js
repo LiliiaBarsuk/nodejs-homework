@@ -2,8 +2,11 @@ const service = require("../service/contacts");
 
 const get = async (req, res, next) => {
   const {_id} = req.user;
+  const {page = 1, limit = 20} = req.query;
+  const skip = (page - 1) * limit;
+  const limitParam = Number(limit);
     try {
-      const results = await service.getAllContacts(_id);
+      const results = await service.getAllContacts(_id,  skip, limitParam );
       res.json({
         status: 'success',
         code: 200,

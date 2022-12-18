@@ -19,7 +19,7 @@ const auth = async(req, res, next) => {
         const user = await getUser(id);
          console.log(user);
 
-        if(!user) {
+        if(!user || !user.token) {
            next(createError(401, "Not authorized", { status: "Unauthorized" }))
         }
 

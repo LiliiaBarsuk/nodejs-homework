@@ -1,7 +1,7 @@
 const Contact = require("./schemas/contact")
 
-const getAllContacts = async (id) => {
-    return Contact.find({owner: id});
+const getAllContacts = async (id,  skip, limit) => {
+    return Contact.find({owner: id}, "", {skip, limit});
 };
 
 const getContactById = (id) => {

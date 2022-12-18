@@ -7,6 +7,7 @@ const { auth } = require('../middlewares/auth')
 router.post("/register", authValidation, ctrlUser.registerUser);
 router.post("/login", authValidation, ctrlUser.loginUser);
 router.get("/current", auth, ctrlUser.getCurrent);
+router.post("/logout", auth, ctrlUser.logOutUser);
 
 
 
