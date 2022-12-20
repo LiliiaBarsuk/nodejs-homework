@@ -34,7 +34,26 @@ const updateContactValidation = (req, res, next) => {
     next();
 };
 
+const authValidation = (req, res, next) => {
+    const schema = Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().min(6).required(),
+    })
+
+    const { error } = schema.validate(req.body);
+
+    if (error) {
+      return res.status(400).json({
+        status: "400 Bad Request",
+        message: error.details
+      });
+    }
+  
+    next();
+}; 
+
 module.exports = {
     addContactValidation,
-    updateContactValidation
+    updateContactValidation,
+    authValidation
 }
