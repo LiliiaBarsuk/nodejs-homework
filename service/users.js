@@ -5,8 +5,8 @@ const findUser = async(email) => {
 }
 
 
-const register = async({email, password}) => {
-    return User.create({email, password }) 
+const register = async({email, password, avatarURL}) => {
+    return User.create({email, password, avatarURL }) 
 }
 
 const getUser = async(id) => {
