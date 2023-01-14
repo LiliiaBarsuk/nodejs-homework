@@ -62,10 +62,11 @@ const create = async (req, res, next) => {
 }
 
 const update = async (req, res, next) => {
-    const { id } = req.params
+    const { id } = req.params;
+    const {_id: ownerId } = req.user;
     const { name, emai, phone, favorite } = req.body
     try {
-      const result = await service.updateContact(id, { name, emai, phone, favorite })
+      const result = await service.updateContact(id, ownerId, { name, emai, phone, favorite })
       if (result) {
         res.json({
           status: 'success',
@@ -87,10 +88,11 @@ const update = async (req, res, next) => {
 }
 
 const updateFavorite = async (req, res, next) => {
-    const { id } = req.params
-    const { favorite } = req.body
+    const { id } = req.params;
+    const { favorite } = req.body;
+    const {_id: ownerId } = req.user;
     try {
-      const result = await service.updateContact(id, { favorite })
+      const result = await service.updateContact(id, ownerId, { favorite })
       if (result) {
         res.json({
           status: 'success',
@@ -113,9 +115,9 @@ const updateFavorite = async (req, res, next) => {
   
   const remove = async (req, res, next) => {
     const { id } = req.params
-  
+    const {_id: ownerId } = req.user;
     try {
-      const result = await service.removeContact(id)
+      const result = await service.removeContact(id, ownerId)
       if (result) {
         res.json({
           status: 'success',
